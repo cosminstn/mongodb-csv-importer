@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": "index.js",
   "scripts": {
+    "build-exec": "pkg . --out-path ./dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/cosminstn/mongodb-csv-importer/issues"
   },
-  "homepage": "https://github.com/cosminstn/mongodb-csv-importer#readme"
+  "homepage": "https://github.com/cosminstn/mongodb-csv-importer#readme",
+  "dependencies": {
+    "yargs": "^17.2.1"
+  }
 }
