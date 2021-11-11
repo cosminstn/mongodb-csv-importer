@@ -1,0 +1,11 @@
+{
+    "url": "localhost:27017",
+    "database": "test",
+    "collection": "city_temperatures",
+    "input": "./sample_input/input.csv",
+    "separator": ",",
+    "fieldMappings": {
+        "_id": "ObjectId",
+        "temperature": "number"
+    }
+}
