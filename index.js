@@ -4,10 +4,12 @@ const path = require("path");
 const { MongoClient, ObjectId } = require("mongodb");
 const csv = require("csvtojson");
 
+const usage =
+    "Usage: -u <mongo_instance_url> -d <db_name> -c <collection_name> -i <input_file_path> or \n" +
+    "       --cf <json_config_file_path>";
+
 const options = yargs
-    .usage(
-        "Usage: -u <mongo_instance_url> -d <db_name> -c <collection_name> -i <input_file_path>"
-    )
+    .usage(usage)
     .option("cf", {
         alias: "configFile",
         describe: "Configuration File Path",
@@ -40,6 +42,11 @@ const options = yargs
         demandOption: false,
     }).argv;
 
+if (options.configFile == null && options.url == null) {
+    console.error(usage);
+    return;
+}
+
 // check configuration
 // if no config file is specified then we must have params u, d and c configured
 if (options.configFile == null) {
@@ -66,7 +73,7 @@ if (options.configFile == null) {
         options.collection != null
     ) {
         console.error(
-            "Please don't mix manual configuration with file configuration! Drop url, database and collection args from the command!"
+            "Please don't mix manual configuration with file configuration! When using configuration file drop any other "
         );
         return;
     }
