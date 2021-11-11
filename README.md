@@ -7,7 +7,7 @@ The program can be used in 2 ways, by specifying args manually or with a config 
 ## Using with a config file (recommended)
 Sample usage for macos platform, `config.json` is located in the current folder.
 ```bash
-./mongodb-csv-importer-macos --cf config.json
+./mongodb-csv-importer-macos --cf ./sample_input/config.json
 ```
 
 ## Configuration file structure
@@ -31,3 +31,6 @@ Sample usage for macos platform, `config.json` is located in the current folder.
 
 ## Using with args (not recommended)
 `This Method is only suitable for simple use cases as it doesn't support field mappings.`
+```bash
+./mongodb-csv-importer-macos -u localhost:27017 -d test -c temperatures_2 -i ./sample_input/input.csv
+```
