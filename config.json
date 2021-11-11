@@ -2,5 +2,10 @@
     "url": "localhost:27017",
     "database": "cezy",
     "collection": "filme_porno",
-    "input": "./input.csv"
+    "input": "./input.csv",
+    "separator": ",",
+    "fieldMappings": {
+        "_id": "ObjectId",
+        "nr": "number"
+    }
 }

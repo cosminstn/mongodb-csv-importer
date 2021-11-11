@@ -1,3 +1,5 @@
-_id,titlu,link
-618c0600e2a689ed0d688d31,'Ce zici cumetre?','https://google.ro'
-618c0600e2a689ed0d688d32,'Iote bine - tu?','https://google.ro'
+_id,titlu,link,nr,str_cu_virgula
+618c0600e2a689ed0d689d31,Ce zici cumetre?,https://google.ro,1,"esti mare kku, kkule"
+618c0600e2a689ed0d689d32,Iote bine - tu?,https://google.ro,3,"fldsa"
+618c0600e2a689ed0d689d33,bre,https://google.ro,5.15,"23.14 40.85, 23.95 40.01"
+618c0600e2a689ed0d689d34,stai nu da,https://google.ro,-21, "nu ca esti bulangiu, rau de tot"

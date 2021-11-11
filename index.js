@@ -1,7 +1,7 @@
 const yargs = require("yargs");
 const fs = require("fs");
 const path = require("path");
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const csv = require("csvtojson");
 
 const options = yargs
@@ -78,11 +78,29 @@ function processMongoConnectionUrl(url) {
     return url.startsWith("mongodb://") ? url : "mongodb://" + url;
 }
 
+function mapField(value, targetType) {
+    console.log(`mapping ${value} to ${targetType}`);
+    if (targetType === "string" && value instanceof "string") {
+        return value;
+    }
+    switch (targetType) {
+        case "ObjectId":
+            // assume field is a hex string
+            return ObjectId.createFromHexString(value);
+        case "number":
+            return Number(value);
+        case "date":
+        case "timestamp":
+            return Date.parse(value);
+    }
+}
+
 (async () => {
+    // read the configuration
     const mongoConfig = { url: null, database: null, collection: null };
+    let mappings = {};
     let collection = null;
     let inputDataUrl = null;
-
     try {
         if (configurationMode === "file") {
             // read data from json file
@@ -99,6 +117,8 @@ function processMongoConnectionUrl(url) {
                 mongoConfig.collection = config.collection;
 
                 inputDataUrl = config.input;
+
+                mappings = config.fieldMappings || {};
             } catch (ex) {
                 console.error(
                     "Invalid configuration file: " + options.configFile
@@ -126,6 +146,7 @@ function processMongoConnectionUrl(url) {
         return;
     }
 
+    // read data from the input file
     let data = [];
     try {
         const rawData = fs.readFileSync(path.resolve(inputDataUrl), "utf8");
@@ -140,7 +161,22 @@ function processMongoConnectionUrl(url) {
         throw ex;
     }
 
+    // map fields to specified types
+    if (mappings != null && Object.keys(mappings).length > 0) {
+        data = data.map((entry) => {
+            for (let field of Object.keys(mappings)) {
+                const targetType = mappings[field];
+                entry[field] = mapField(entry[field], targetType);
+            }
+            return entry;
+        });
+    }
+
+    // insert data into the database
     try {
+        console.log("Inserting data: ");
+        console.log(data);
+
         const insertResult = await collection.insertMany(data);
         console.info("Inserted documents =>", insertResult);
 
