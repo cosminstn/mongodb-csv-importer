@@ -30,5 +30,8 @@
         "csvtojson": "^2.0.10",
         "mongodb": "^4.1.4",
         "yargs": "^17.2.1"
+    },
+    "devDependencies": {
+        "pkg": "^5.4.1"
     }
 }
