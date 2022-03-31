@@ -24,7 +24,7 @@ Sample usage for macos platform, `config.json` is located in the current folder.
     // OPTIONAL: Specifies field conversions. In this case, for every entry read from the csv file, `_id` is converted to `ObjectId`, and `temperature` is converted to `number`
     "fieldMappings": {
         "_id": "ObjectId",
-        "number": "number"
+        "temperature": "number"
     }
 }
 ```
